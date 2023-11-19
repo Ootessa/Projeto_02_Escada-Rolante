@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int N;
+    printf("Digite o número de pessoas: ");
+    scanf("%d", &N);
+
+    int lastExitTime = 0;
+    int leftExitTime = 0, rightExitTime = 0;
+
+    for (int i = 0; i < N; ++i) {
+        int arrivalTime, direction;
+        printf("Digite o momento da pessoa %d: ", i + 1);
+        scanf("%d", &arrivalTime);
+
+        printf("Digite a direção (0 para esquerda, 1 para direita) da pessoa %d: ", i + 1);
+        scanf("%d", &direction);
+
+        int currentTime = arrivalTime;
+
+        if (direction == 0) {  // Pessoa quer ir da ponta esquerda para a direita
+            leftExitTime = (currentTime > leftExitTime) ? currentTime : leftExitTime;
+            leftExitTime += 10;
+            rightExitTime = leftExitTime;  // Atualiza o tempo da ponta direita
+        } else {  // Pessoa quer ir da ponta direita para a esquerda
+            rightExitTime = (currentTime > rightExitTime) ? currentTime : rightExitTime;
+            rightExitTime += 10;
+            leftExitTime = rightExitTime;  // Atualiza o tempo da ponta esquerda
+        }
+
+        lastExitTime = (leftExitTime > rightExitTime) ? leftExitTime : rightExitTime;
+    }
+
+    printf("O momento em que a última pessoa saiu da escada rolante é: %d\n", lastExitTime);
+
+    return 0;
+}
